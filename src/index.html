@@ -16,7 +16,7 @@
             <div class=" col-12 col-md-6 offset-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <input id="calc-display" class="form-control form-control-lg" type="text" readonly
+                        <input id="calc-display" class="form-control form-control-lg text-end" type="text" readonly
                             aria-label=".form-control-lg example">
                         <div class="row gx-1">
                             <div class="col-3">
@@ -74,7 +74,8 @@
                                 <button type="button" class="btn btn-light w-100 mt-2 border">.</button>
                             </div>
                             <div class="col-3">
-                                <button type="button" class="btn btn-primary w-100 mt-2 border border-primary">=</button>
+                                <button type="button"
+                                    class="btn btn-primary w-100 mt-2 border border-primary">=</button>
                             </div>
                             <div class="col-3">
                                 <button type="button" class="btn btn-light w-100 mt-2 border">+</button>
@@ -88,6 +89,47 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("Document is ready");
+            const display = document.getElementById('calc-display');
+            const buttons = document.getElementsByClassName('btn');
+            console.log(display);
+            console.log(buttons);
+
+            function evaluateResult(){
+                const converted = currentVal.replace("x", "*").replace("÷","/").replace("%","*0.01");
+
+                const result = eval(converted);
+                currentVal = result.toString();
+                display.value = currentVal;
+            }
+
+            let currentVal = "";
+
+            for (let i = 0; i < buttons.length; i++) {
+                const button = buttons[i];
+                button.addEventListener('click', function () {
+                    const value = button.innerText;
+                    if (value == "AC") {
+                        currentVal = "";
+                        display.value = currentVal;
+                    }
+                    else if(value == "="){
+                        evaluateResult();
+                    }
+
+                    else {
+                        currentVal += value;
+                        display.value = currentVal;
+                    }
+
+                })
+            }
+
+        });
+    </script>
+
 </body>
 
 </html>
